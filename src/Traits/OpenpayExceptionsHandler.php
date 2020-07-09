@@ -30,7 +30,7 @@ trait OpenpayExceptionsHandler
      */
     public function renderOpenpayException(Request $request, OpenpayApiError $exception)
     {
-        $message = null;
+        $message = $exception->getMessage();
         $http_error_code = $exception->getHttpCode();
         $error_code = $exception->getErrorCode();
 

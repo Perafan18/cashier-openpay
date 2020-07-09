@@ -75,7 +75,7 @@ class CashierOpenpayServiceProvider extends ServiceProvider
             ], 'cashier-openpay-configs');
 
             $this->publishes([
-                __DIR__.'/Http/Controllers/WebhookController.php.stub' => app_path('Http/Controllers/WebhookController.php')
+                __DIR__.'/Http/Controllers/WebhookController.php.stub' => app_path('Http/Controllers/WebhookController.php'),
             ], 'cashier-openpay-webhook-controller');
 
             $prefix = 'migrations/'.date('Y_m_d_His', time());

@@ -6,8 +6,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Orchestra\Testbench\TestCase;
-use Perafan\CashierOpenpay\Tests\Database\Migrations\CreateUsersTable;
 use Perafan\CashierOpenpay\CashierOpenpayServiceProvider;
+use Perafan\CashierOpenpay\Tests\Database\Migrations\CreateUsersTable;
 
 abstract class BaseTestCase extends TestCase
 {
@@ -33,7 +33,7 @@ abstract class BaseTestCase extends TestCase
                 [
                     [
                         'class' => CreateUsersTable::class,
-                        'file_path' => __DIR__. '/database/migrations/create_users_table.php',
+                        'file_path' => __DIR__.'/database/migrations/create_users_table.php',
                     ],
                     [
                         'class' => '\CreateCustomerColumns',

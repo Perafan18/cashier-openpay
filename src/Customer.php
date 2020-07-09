@@ -1,4 +1,5 @@
 <?php
+
 namespace Perafan\CashierOpenpay;
 
 class Customer

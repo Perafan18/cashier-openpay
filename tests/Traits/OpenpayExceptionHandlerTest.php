@@ -164,12 +164,12 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
         }
 
         $this->assertEquals($expected_response_data, $response->getContent());
-        $this->assertEquals([$request_id], $response->getSession()->get('errors')->get('openpay_error_request_id'));
-        $this->assertEquals([$message], $response->getSession()->get('errors')->get('openpay_error_message'));
-        $this->assertEquals([$exception_message], $response->getSession()->get('errors')->get('openpay_error_message_original'));
-        $this->assertEquals([$http_code], $response->getSession()->get('errors')->get('openpay_error_http_code'));
-        $this->assertEquals([$category], $response->getSession()->get('errors')->get('openpay_error_category'));
-        $this->assertEquals([$error_code], $response->getSession()->get('errors')->get('openpay_error_code'));
+        $this->assertEquals([$request_id], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_request_id'));
+        $this->assertEquals([$message], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_message'));
+        $this->assertEquals([$exception_message], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_message_original'));
+        $this->assertEquals([$http_code], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_http_code'));
+        $this->assertEquals([$category], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_category'));
+        $this->assertEquals([$error_code], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_code'));
         $this->assertEquals(302, $response->getStatusCode());
     }
 
@@ -193,12 +193,12 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
         }
 
         $this->assertEquals($expected_response_data, $response->getContent());
-        $this->assertEquals([$request_id], $response->getSession()->get('errors')->get('openpay_error_request_id'));
-        $this->assertEquals([$message], $response->getSession()->get('errors')->get('openpay_error_message'));
-        $this->assertEquals([$exception_message], $response->getSession()->get('errors')->get('openpay_error_message_original'));
-        $this->assertEquals([$http_code], $response->getSession()->get('errors')->get('openpay_error_http_code'));
-        $this->assertEquals([$category], $response->getSession()->get('errors')->get('openpay_error_category'));
-        $this->assertEquals([$error_code], $response->getSession()->get('errors')->get('openpay_error_code'));
+        $this->assertEquals([$request_id], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_request_id'));
+        $this->assertEquals([$message], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_message'));
+        $this->assertEquals([$exception_message], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_message_original'));
+        $this->assertEquals([$http_code], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_http_code'));
+        $this->assertEquals([$category], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_category'));
+        $this->assertEquals([$error_code], $response->getSession()->get('errors')->getbag('cashier')->get('openpay_error_code'));
         $this->assertEquals(302, $response->getStatusCode());
     }
 

@@ -2,8 +2,8 @@
 
 namespace Perafan\CashierOpenpay\Tests;
 
-use Perafan\CashierOpenpay\Tests\Fixtures\User;
 use Illuminate\Support\Facades\Hash;
+use Perafan\CashierOpenpay\Tests\Fixtures\User;
 
 class BillableTest extends BaseTestCase
 {
@@ -25,7 +25,7 @@ class BillableTest extends BaseTestCase
         $this->assertFalse($user->hasOpenpayId());
 
         $user->createAsOpenpayCustomer([
-            'external_id' => rand(1000,10000)
+            'external_id' => $this->randomExternalId()
         ]);
 
         $this->assertTrue($user->hasOpenpayId());
@@ -33,6 +33,11 @@ class BillableTest extends BaseTestCase
         $this->assertIsObject($user->asOpenpayCustomer());
 
         $user->asOpenpayCustomer()->delete();
+    }
+
+    protected function randomExternalId()
+    {
+        return rand(1000, 10000);
     }
 
     protected function createUser(array $options = [])

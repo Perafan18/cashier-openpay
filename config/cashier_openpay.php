@@ -10,5 +10,5 @@ return [
 
     'public_key' => env('OPENPAY_PUBLIC_KEY', ''),
 
-    'log_errors' => env('OPENPAY_LOG_ERRORS', true)
+    'log_errors' => env('OPENPAY_LOG_ERRORS', true),
 ];

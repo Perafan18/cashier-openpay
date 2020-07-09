@@ -10,7 +10,7 @@ trait Billable
     public function charge($amount, $options)
     {
         $options = array_merge([
-            'amount' => $amount
+            'amount' => $amount,
         ], $options);
 
         $customer = $this->asOpenpayCustomer();
@@ -23,7 +23,7 @@ trait Billable
     {
         $refundData = [
             'description' => $description,
-            'amount' => $amount
+            'amount' => $amount,
         ];
 
         $customer = $this->asOpenpayCustomer();
@@ -35,7 +35,7 @@ trait Billable
     public function newSubscription($name = 'default', $plan_id, $options)
     {
         $options = array_merge([
-            'plan_id' => $plan_id
+            'plan_id' => $plan_id,
         ], $options);
 
         $customer = $this->asOpenpayCustomer();
@@ -47,7 +47,7 @@ trait Billable
             'openpay_status' => $openpay_subscription->status,
             'openpay_plan' => $plan_id,
             'trial_ends_at' => $openpay_subscription->trial_end_date,
-            'ends_at' => $openpay_subscription->period_end_date
+            'ends_at' => $openpay_subscription->period_end_date,
         ]);
 
         $subscription->save();
@@ -113,7 +113,7 @@ trait Billable
      */
     public function createAsOpenpayCustomer(array $options = [])
     {
-        if($this->hasOpenpayId()) {
+        if ($this->hasOpenpayId()) {
             return $this->asOpenpayCustomer();
         }
 
@@ -131,7 +131,6 @@ trait Billable
 
     /**
      * Get the Openpay customer for the Openpay model.
-     *
      */
     public function asOpenpayCustomer()
     {

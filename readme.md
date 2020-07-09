@@ -41,7 +41,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if($this->isOpenpayException($exception)) {
+        if ($this->isOpenpayException($exception)) {
             return $this->renderOpenpayException($request, $exception);
         }
         return parent::render($request, $exception);

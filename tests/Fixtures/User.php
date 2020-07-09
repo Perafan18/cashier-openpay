@@ -2,8 +2,8 @@
 
 namespace Perafan\CashierOpenpay\Tests\Fixtures;
 
-use Perafan\CashierOpenpay\Billable;
 use Illuminate\Database\Eloquent\Model;
+use Perafan\CashierOpenpay\Billable;
 
 class User extends Model
 {

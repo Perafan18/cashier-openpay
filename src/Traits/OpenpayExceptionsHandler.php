@@ -33,7 +33,7 @@ trait OpenpayExceptionsHandler
         $http_error_code = $exception->getHttpCode();
         $error_code = $exception->getErrorCode();
 
-        if($error_code >= 1000 && $error_code <= 1020) {
+        if ($error_code >= 1000 && $error_code <= 1020) {
             $message = $this->generalErrors($error_code);
         } elseif ($error_code >= 2001 && $error_code <= 2003) {
             $message = $this->storageErrors($error_code);
@@ -51,15 +51,15 @@ trait OpenpayExceptionsHandler
             'openpay_error_message_original' => $exception->getMessage(),
             'openpay_error_http_code' => $http_error_code,
             'openpay_error_category' => $exception->getCategory(),
-            'openpay_error_code' => $error_code
+            'openpay_error_code' => $error_code,
         ];
 
         if (config('cashier_openpay.log_errors')) {
-            Log::error('OPENPAY ERROR REQUEST ID: ' . $exception->getRequestId());
-            Log::error('OPENPAY ERROR MESSAGE: ' . $exception->getMessage());
-            Log::error('OPENPAY ERROR HTTP CODE: ' . $http_error_code);
-            Log::error('OPENPAY ERROR CODE: ' . $error_code);
-            Log::error('OPENPAY ERROR CATEGORY: ' . $exception->getCategory());
+            Log::error('OPENPAY ERROR REQUEST ID: '.$exception->getRequestId());
+            Log::error('OPENPAY ERROR MESSAGE: '.$exception->getMessage());
+            Log::error('OPENPAY ERROR HTTP CODE: '.$http_error_code);
+            Log::error('OPENPAY ERROR CODE: '.$error_code);
+            Log::error('OPENPAY ERROR CATEGORY: '.$exception->getCategory());
         }
 
         if ($request->ajax() || $request->wantsJson()) {
@@ -123,7 +123,7 @@ trait OpenpayExceptionsHandler
             case 2001:
                 return __('The bank account already exists');
             case 2003:
-                return __( 'The external_id already exists');
+                return __('The external_id already exists');
         }
     }
 

@@ -21,7 +21,7 @@ abstract class BaseTestCase extends TestCase
 
     /**
      * Execute table migrations.
-     * @return \Laravel\Cashier\Tests\BaseTestCase
+     * @return BaseTestCase
      */
     protected function withPackageMigrations()
     {
@@ -32,15 +32,15 @@ abstract class BaseTestCase extends TestCase
                 [
                     [
                         'class' => CreateUsersTable::class,
-                        'file_path' => __DIR__ . '/database/migrations/create_users_table.php',
+                        'file_path' => __DIR__ .'/database/migrations/create_users_table.php',
                     ],
                     [
                         'class' => '\CreateCustomerColumns',
-                        'file_path' => $migrations_dir . '/create_customer_columns.php.stub',
+                        'file_path' => $migrations_dir.'/create_customer_columns.php.stub',
                     ],
                     [
                         'class' => '\CreateSubscriptionsTable',
-                        'file_path' => $migrations_dir . '/create_subscriptions_table.php.stub',
+                        'file_path' => $migrations_dir.'/create_subscriptions_table.php.stub',
                     ],
                 ]
             )
@@ -73,7 +73,7 @@ abstract class BaseTestCase extends TestCase
 
     protected function openpayExceptions()
     {
-        include_once __DIR__ .'/../vendor/openpay/sdk/data/OpenpayApiError.php';
+        include_once __DIR__.'/../vendor/openpay/sdk/data/OpenpayApiError.php';
     }
 
     /**

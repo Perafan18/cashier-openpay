@@ -3,6 +3,7 @@
 namespace Perafan\CashierOpenpay;
 
 use Openpay;
+use OpenpayApi;
 
 class OpenpayInstance
 {
@@ -30,7 +31,7 @@ class OpenpayInstance
      */
     public static function getInstance()
     {
-        if (!static::$openpayInstance) {
+        if (! static::$openpayInstance) {
             static::$openpayInstance = Openpay::getInstance(static::getOpenpayId(), static::getOpenpayKey());
         }
 

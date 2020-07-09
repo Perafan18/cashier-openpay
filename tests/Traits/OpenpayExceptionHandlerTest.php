@@ -2,8 +2,6 @@
 
 namespace Perafan\CashierOpenpay\Tests\Traits;
 
-use Perafan\CashierOpenpay\Tests\BaseTestCase;
-use Perafan\CashierOpenpay\Traits\OpenpayExceptionsHandler;
 use Exception;
 use OpenpayApiAuthError;
 use OpenpayApiConnectionError;
@@ -11,6 +9,8 @@ use OpenpayApiError;
 use OpenpayApiRequestError;
 use OpenpayApiTransactionError;
 use Throwable;
+use Perafan\CashierOpenpay\Tests\BaseTestCase;
+use Perafan\CashierOpenpay\Traits\OpenpayExceptionsHandler;
 
 class OpenpayExceptionHandlerTest extends BaseTestCase
 {
@@ -62,7 +62,7 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
 
         try {
             throw new Exception($message);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             $response = (new Handler)->render($request, $exception);
         }
 
@@ -85,7 +85,7 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
 
         try {
             throw new OpenpayApiAuthError($exception_message, $error_code, $category, $request_id, $http_code, $fraud_rules);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             $response = (new Handler)->render($request, $exception);
         }
 
@@ -109,7 +109,7 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
 
         try {
             throw new OpenpayApiTransactionError($exception_message, $error_code, $category, $request_id, $http_code, $fraud_rules);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             $response = (new Handler)->render($request, $exception);
         }
 
@@ -133,7 +133,7 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
 
         try {
             throw new OpenpayApiRequestError($exception_message, $error_code, $category, $request_id, $http_code, $fraud_rules);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             $response = (new Handler)->render($request, $exception);
         }
 
@@ -157,7 +157,7 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
 
         try {
             throw new OpenpayApiTransactionError($exception_message, $error_code, $category, $request_id, $http_code, $fraud_rules);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             $response = (new Handler)->render($request, $exception);
         }
 
@@ -186,7 +186,7 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
 
         try {
             throw new OpenpayApiTransactionError($exception_message, $error_code, $category, $request_id, $http_code, $fraud_rules);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             $response = (new Handler)->render($request, $exception);
         }
 
@@ -209,13 +209,12 @@ class OpenpayExceptionHandlerTest extends BaseTestCase
             'openpay_error_http_code' => $http_code,
             'openpay_error_category' => $category,
             'openpay_error_code' => $code,
-            'openpay_error_fraud_rules' => $fraud_rules
         ]);
     }
 
     private function expectedResponseHtml()
     {
-        $expected_response_data = file_get_contents(__DIR__ . '/../Fixtures/redirect_localhost.html');
+        $expected_response_data = file_get_contents(__DIR__.'/../Fixtures/redirect_localhost.html');
 
         return substr($expected_response_data, 0, -1);
     }
@@ -232,7 +231,7 @@ class Handler
      */
     public function render($request, Throwable $exception)
     {
-        if($this->isOpenpayException($exception)) {
+        if ($this->isOpenpayException($exception)) {
             return $this->renderOpenpayException($request, $exception);
         }
 

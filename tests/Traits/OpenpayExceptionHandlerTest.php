@@ -3,14 +3,16 @@
 namespace Perafan\CashierOpenpay\Tests\Traits;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use OpenpayApiAuthError;
 use OpenpayApiConnectionError;
 use OpenpayApiError;
 use OpenpayApiRequestError;
 use OpenpayApiTransactionError;
-use Throwable;
 use Perafan\CashierOpenpay\Tests\BaseTestCase;
 use Perafan\CashierOpenpay\Traits\OpenpayExceptionsHandler;
+use Throwable;
 
 class OpenpayExceptionHandlerTest extends BaseTestCase
 {
@@ -227,7 +229,7 @@ class Handler
     /**
      * @param $request
      * @param Throwable $exception
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
     public function render($request, Throwable $exception)
     {

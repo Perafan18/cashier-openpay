@@ -1,12 +1,17 @@
 <?php
 
-
 namespace Perafan\CashierOpenpay;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Perafan\CashierOpenpay\Customer as OpenpayCustomer;
 
 trait Billable
 {
+    /**
+     * @param $amount
+     * @param $options
+     * @return mixed
+     */
     public function charge($amount, $options)
     {
         $options = array_merge([
@@ -16,9 +21,14 @@ trait Billable
         $customer = $this->asOpenpayCustomer();
 
         return $customer->charges->create($options);
-
     }
 
+    /**
+     * @param $charge_id
+     * @param null $amount
+     * @param string $description
+     * @return mixed
+     */
     public function refund($charge_id, $amount = null, $description = '')
     {
         $refundData = [
@@ -32,7 +42,13 @@ trait Billable
         return $charge->refund($refundData);
     }
 
-    public function newSubscription($name = 'default', $plan_id, $options)
+    /**
+     * @param $plan_id
+     * @param string $name
+     * @param array $options
+     * @return mixed
+     */
+    public function newSubscription($plan_id, $name = 'default', $options = [])
     {
         $options = array_merge([
             'plan_id' => $plan_id,
@@ -57,38 +73,32 @@ trait Billable
 
     public function onPlan()
     {
-
     }
 
     public function onTrial()
     {
-
     }
 
     public function onGenericTrial()
     {
-
     }
 
     public function subscribed()
     {
-
     }
 
     public function subscribedToPlan()
     {
-
     }
 
     public function subscription()
     {
-
     }
 
     /**
      * Get all of the subscriptions for the Paddle model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function subscriptions()
     {
@@ -109,7 +119,7 @@ trait Billable
      * Create a Openpay customer for the given Openpay model.
      *
      * @param array $options
-     * @return
+     * @return OpenpayCustomer
      */
     public function createAsOpenpayCustomer(array $options = [])
     {

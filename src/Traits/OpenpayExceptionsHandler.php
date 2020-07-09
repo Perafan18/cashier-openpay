@@ -2,13 +2,14 @@
 
 namespace Perafan\CashierOpenpay\Traits;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use OpenpayApiError;
 
 trait OpenpayExceptionsHandler
 {
-
     /**
      * Determine if the given exception is an OpenpayApiError exception.
      *
@@ -23,13 +24,13 @@ trait OpenpayExceptionsHandler
     /**
      * Render the given OpenpayApiError.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param OpenpayApiError $exception
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return JsonResponse|RedirectResponse
      */
     public function renderOpenpayException(Request $request, OpenpayApiError $exception)
     {
-        $message = $exception->getMessage();
+        $message = null;
         $http_error_code = $exception->getHttpCode();
         $error_code = $exception->getErrorCode();
 
@@ -199,4 +200,3 @@ trait OpenpayExceptionsHandler
         }
     }
 }
-

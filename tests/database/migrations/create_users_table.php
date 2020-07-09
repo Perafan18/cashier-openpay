@@ -1,4 +1,5 @@
 <?php
+
 namespace Perafan\CashierOpenpay\Tests\Database\Migrations;
 
 use Illuminate\Database\Migrations\Migration;

@@ -11,7 +11,7 @@ abstract class BaseWebhookController
     /**
      * Handle a OpenPay webhook call.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handleWebhook(Request $request)

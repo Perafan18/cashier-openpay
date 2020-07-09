@@ -25,7 +25,7 @@ class BillableTest extends BaseTestCase
         $this->assertFalse($user->hasOpenpayId());
 
         $user->createAsOpenpayCustomer([
-            'external_id' => $this->randomExternalId()
+            'external_id' => $this->randomExternalId(),
         ]);
 
         $this->assertTrue($user->hasOpenpayId());

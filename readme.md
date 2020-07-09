@@ -67,7 +67,7 @@ Publish Migrations
 php artisan vendor:publish --tag="cashier-openpay-migrations"
 ```
 
-And run migrations
+Run migrations
 
 ``` bash
 php artisan migrate

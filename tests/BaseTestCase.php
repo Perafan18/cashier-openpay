@@ -2,16 +2,17 @@
 
 namespace Perafan\CashierOpenpay\Tests;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Laravel\Cashier\Tests\Database\Migrations\CreateUsersTable;
 use Orchestra\Testbench\TestCase;
+use Perafan\CashierOpenpay\Tests\Database\Migrations\CreateUsersTable;
 use Perafan\CashierOpenpay\CashierOpenpayServiceProvider;
 
 abstract class BaseTestCase extends TestCase
 {
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      * @return array
      */
     protected function getPackageProviders($app)
@@ -32,7 +33,7 @@ abstract class BaseTestCase extends TestCase
                 [
                     [
                         'class' => CreateUsersTable::class,
-                        'file_path' => __DIR__ .'/database/migrations/create_users_table.php',
+                        'file_path' => __DIR__. '/database/migrations/create_users_table.php',
                     ],
                     [
                         'class' => '\CreateCustomerColumns',
@@ -80,6 +81,7 @@ abstract class BaseTestCase extends TestCase
      * @param string $url
      * @param string $method
      * @param array $response
+     * @return Request
      */
     protected function ajaxRequest($url = '/', $method = 'POST', $response = [])
     {
@@ -98,7 +100,13 @@ abstract class BaseTestCase extends TestCase
     protected function request($url = '/', $method = 'POST', $response = [])
     {
         return Request::create(
-            $url, $method, [], [], [], [], json_encode($response)
+            $url,
+            $method,
+            [],
+            [],
+            [],
+            [],
+            json_encode($response)
         );
     }
 }

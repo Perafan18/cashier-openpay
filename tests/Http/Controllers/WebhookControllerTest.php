@@ -21,7 +21,7 @@ class WebhookControllerTest extends BaseTestCase
 
     public function testVerificationAndMethodExists()
     {
-        $request = $this->request('/','POST', ['type' => 'verification']);
+        $request = $this->request('/', 'POST', ['type' => 'verification']);
 
         $response = (new WebhookControllerTestStub)->handleWebhook($request);
 
@@ -32,7 +32,7 @@ class WebhookControllerTest extends BaseTestCase
 
     public function testRandomEventAndTheMethodDoesntExists()
     {
-        $request = $this->request('/','POST', ['type' => 'random.event']);
+        $request = $this->request('/', 'POST', ['type' => 'random.event']);
 
         $response = (new WebhookControllerTestStub)->handleWebhook($request);
 

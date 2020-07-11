@@ -37,7 +37,7 @@ class CashierOpenpayServiceProvider extends ServiceProvider
      */
     protected function bootResources()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'perafan');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'cashier_openpay');
     }
 
     /**
@@ -57,8 +57,16 @@ class CashierOpenpayServiceProvider extends ServiceProvider
      */
     protected function bootDirectives()
     {
-        Blade::directive('openpayJS', function () {
-            return "<?php echo view('perafan::js'); ?>";
+        Blade::directive('openpayJSLoad', function () {
+            return "<?php echo view('cashier_openpay::js_load'); ?>";
+        });
+
+        Blade::directive('openpayJqueryJSInit', function ($id_form = '', $input_name = 'deviceIdHiddenFieldName') {
+            return "<?php echo view('cashier_openpay::js_query', compact(['id_form' => '$id_form', 'input_name' => '$input_name'])); ?>";
+        });
+
+        Blade::directive('openpayJSInit', function ($id_form = '', $input_name = 'deviceIdHiddenFieldName') {
+            return "<?php echo view('cashier_openpay::js', compact(['id_form' => '$id_form', 'input_name' => '$input_name'])); ?>";
         });
     }
 

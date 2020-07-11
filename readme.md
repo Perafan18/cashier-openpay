@@ -93,6 +93,52 @@ trait MyOpenpayExceptionsHandler
 } 
 ```
 
+## Catch errors
+
+To render the error reponse in blade you could use the follow snippets.
+
+### Using [bootstrap](https://getbootstrap.com/)
+
+```
+@if($errors->cashier->isNotEmpty())
+    <div class="alert alert-danger" role="alert">
+        @foreach ($errors->cashier->keys() as $key)
+            <strong>{{ $key }} :</strong> {{ $errors->cashier->get($key)[0] }} <br>
+        @endforeach
+    </div>
+@endif
+```
+
+### Using [tailwindcss](https://tailwindcss.com/)
+```
+@if($errors->cashier->isNotEmpty())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        @foreach ($errors->cashier->keys() as $key)
+            <strong class="font-bold">{{ $key }} :</strong> {{ $errors->cashier->get($key)[0] }} <br>
+        @endforeach
+    </div>
+@endif
+```
+
+## Use openpayJS 
+
+``` html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    ...
+    @openpayJSLoad
+</head>
+<body>
+    ...
+
+    @openpayJSInit
+    //or if you are using Jquery
+    @openpayJqueryJSInit
+</body>
+</html>
+```
+
 ## Testing
 
 ``` bash

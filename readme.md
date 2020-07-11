@@ -122,6 +122,6 @@ MIT. Please see the [license file](license.md) for more information.
 
 [link-packagist]: https://packagist.org/packages/perafan/cashier-openpay
 [link-downloads]: https://packagist.org/packages/perafan/cashier-openpay
-[link-travis]: https://travis-ci.org/perafan/cashier-openpay
-[link-styleci]: https://styleci.io/repos/12345678
+[link-travis]: https://travis-ci.org/github/Perafan18/cashier-openpay
+[link-styleci]: https://styleci.io/repos/133201440
 [link-author]: https://github.com/perafan18

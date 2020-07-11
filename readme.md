@@ -117,8 +117,8 @@ MIT. Please see the [license file](license.md) for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/perafan/cashier-openpay.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/perafan/cashier-openpay.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/perafan/cashier-openpay/master.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/12345678/shield
+[ico-travis]: https://img.shields.io/travis/Perafan18/cashier-openpay/master.svg?style=flat-square
+[ico-styleci]: https://styleci.io/repos/133201440/shield
 
 [link-packagist]: https://packagist.org/packages/perafan/cashier-openpay
 [link-downloads]: https://packagist.org/packages/perafan/cashier-openpay

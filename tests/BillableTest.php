@@ -82,10 +82,6 @@ class BillableTest extends BaseTestCase
         $this->assertTrue($openpayCard->allows_charges);
 
         $this->assertTrue($openpayCard->allows_payouts);
-
-        $cards = self::$user->cards;
-
-        $this->assertEquals($card->id, $cards->first->id);
     }
 
     /** @test */

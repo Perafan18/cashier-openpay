@@ -3,8 +3,7 @@
 namespace Perafan\CashierOpenpay\Tests;
 
 use Carbon\Carbon;
-use Perafan\CashierOpenpay\Plan;
-use Perafan\CashierOpenpay\Subscription;
+use Perafan\CashierOpenpay\Openpay\Plan;
 use Perafan\CashierOpenpay\Tests\Fixtures\User;
 
 class SubscriptionTest extends BaseTestCase

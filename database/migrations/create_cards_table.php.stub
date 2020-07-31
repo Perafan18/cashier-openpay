@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubscriptionsTable extends Migration
+class CreateCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,20 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('cards', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('name');
+
             $table->integer('openpay_id');
-            $table->string('openpay_status');
-            $table->string('openpay_plan');
-            $table->timestamp('trial_ends_at')->nullable();
-            $table->timestamp('ends_at')->nullable();
+            $table->string('type');
+            $table->string('brand')->nullable();
+            $table->string('holder_name');
+            $table->string('card_number');
+            $table->string('expiration_month', 2);
+            $table->string('expiration_year', 2);
+            $table->string('bank_name');
+            $table->string('bank_code');
+
             $table->timestamps();
         });
     }
@@ -33,6 +38,6 @@ class CreateSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('cards');
     }
 }

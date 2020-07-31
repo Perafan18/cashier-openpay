@@ -61,12 +61,12 @@ class CashierOpenpayServiceProvider extends ServiceProvider
             return "<?php echo view('cashier_openpay::js_load'); ?>";
         });
 
-        Blade::directive('openpayJqueryJSInit', function ($id_form = '', $input_name = 'deviceIdHiddenFieldName') {
-            return "<?php echo view('cashier_openpay::js_query', compact(['id_form' => '$id_form', 'input_name' => '$input_name'])); ?>";
+        Blade::directive('openpayJqueryJSInit', function () {
+            return "<?php echo view('cashier_openpay::js_jquery'); ?>";
         });
 
-        Blade::directive('openpayJSInit', function ($id_form = '', $input_name = 'deviceIdHiddenFieldName') {
-            return "<?php echo view('cashier_openpay::js', compact(['id_form' => '$id_form', 'input_name' => '$input_name'])); ?>";
+        Blade::directive('openpayJSInit', function () {
+            return "<?php echo view('cashier_openpay::js'); ?>";
         });
     }
 
@@ -91,6 +91,8 @@ class CashierOpenpayServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../database/migrations/create_customer_columns.php.stub' => database_path($prefix.'_create_customer_columns.php'),
                 __DIR__.'/../database/migrations/create_subscriptions_table.php.stub' => database_path($prefix.'_create_subscriptions_table.php'),
+                __DIR__.'/../database/migrations/create_cards_table.php.stub' => database_path($prefix.'_create_cards_table.php'),
+                __DIR__.'/../database/migrations/create_bank_accounts_table.php.stub' => database_path($prefix.'_create_bank_accounts_table.php'),
             ], 'cashier-openpay-migrations');
         }
     }

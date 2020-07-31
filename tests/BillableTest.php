@@ -114,7 +114,7 @@ class BillableTest extends BaseTestCase
 
         $openpayCard = $card->asOpenpayCard();
 
-        $subscription = self::$user->newSubscription(self::$plan->id, ['source_id' => $card->id]);
+        $subscription = self::$user->newSubscription(self::$plan->id, ['source_id' => $openpayCard->id]);
 
         $this->assertEquals(self::$plan->id, $subscription->openpay_plan);
 

@@ -3,6 +3,7 @@
 namespace Perafan\CashierOpenpay;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
 use Perafan\CashierOpenpay\Openpay\Subscription as OpenpaySubscription;
 
@@ -193,6 +194,32 @@ class Subscription extends Model
         $model = config('cashier_openpay.model');
 
         return $this->belongsTo($model, (new $model)->getForeignKey());
+    }
+
+    /**
+     * Extend an existing subscription's trial period.
+     *
+     * @param CarbonInterface $date
+     * @return Subscription
+     * @throws \Exception
+     */
+    public function extendTrial(CarbonInterface $date)
+    {
+        if (! $date->isFuture()) {
+            throw new \Exception("Extending a subscription's trial requires a date in the future.");
+        }
+
+        $subscription = $this->asOpenpaySubscription();
+
+        $subscription->trial_end_date = $date->getTimestamp();
+
+        $subscription->save();
+
+        $this->trial_ends_at = $date;
+
+        $this->save();
+
+        return $this;
     }
 
     /**

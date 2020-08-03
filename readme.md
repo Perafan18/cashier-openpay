@@ -212,51 +212,10 @@ $openpayCustomer->phone_number = '332165987845';
 $openpayCustomer->save();
 ```
 
-```php
-use Perafan\CashierOpenpay\Openpay\Customer as OpenpayCustomer;
+## Cards
+Coming Soon ...
 
-// Create
-
-$customer_data = [
-    'external_id' => '',
-    'name' => 'customer name',
-    'last_name' => '',
-    'email' => 'customer_email@me.com',
-    'requires_account' => false,
-    'phone_number' => '44209087654',
-    'address' => [
-        'line1' => 'Calle 10',
-        'line2' => 'col. san pablo',
-        'line3' => 'entre la calle 1 y la 2',
-        'state' => 'Queretaro',
-        'city' => 'Queretaro',
-        'postal_code' => '76000',
-        'country_code' => 'MX'
-    ]
-];
-
-$customer = OpenpayCustomer::add($customer_data);
-
-// Find
-
-$customer = OpenpayCustomer::find('a9ualumwnrcxkl42l6mh');
-
-// Update
-
-$customer = OpenpayCustomer::find('a9ualumwnrcxkl42l6mh');
-$customer->name = 'Juan';
-$customer->last_name = 'Godinez';
-$customer->save();
-
-// Delete
-
-$customer = OpenpayCustomer::delete('a9ualumwnrcxkl42l6mh');
-```
-
-## Payment Methods
-
-### Add Cards
-
+### Storing Card
 ```php
 $card_data = [
     'holder_name' => 'Taylor Otwell',
@@ -281,58 +240,15 @@ $extra_data = [
 $card = $user->addCard($card_data, $address, $extra_data);
 ```
 
-### Get all cards
+### Retrieving Cards
+Coming Soon ...
+### Deleting Card
+Coming Soon ...
 
-```php
-$cards = $user->cards();
-// or
+## Bank Accounts
+Coming Soon ...
 
-$cards_data = [
-    'creation[gte]' => '2013-01-01',
-    'creation[lte]' => '2013-12-31',
-    'offset' => 0,
-    'limit' => 5
-];
-
-$cards = $user->cards($cards_data);
-```
-[More info](https://www.openpay.mx/docs/api/#listado-de-tarjetas)
-
-### Get a card
-
-```php
-$customer = $user->asOpenpayCustomer();
-$card = $customer->cards->get('id_card');
-```
-[More info](https://www.openpay.mx/docs/api/#obtener-una-tarjeta)
-
-### Check points
-
-```php
-$cards = $user->cards();
-$cards[0]->get('points');
-```
-[More info](https://www.openpay.mx/docs/api/#consulta-de-puntos)
-
-### Update card
-
-```php
-$cards = $user->cards();
-$cards[0]->holder_name = 'Mr. Pedro';
-$cards[0]->save();
-```
-[More info](https://www.openpay.mx/docs/api/#consulta-de-puntos)
-
-### Delete card
-
-```php
-$cards = $user->cards();
-$cards[0]->delete();
-```
-[More info](https://www.openpay.mx/docs/api/#eliminar-una-tarjeta)
-
-### Create Bank Account
-
+### Storing Bank Account
 ```php
 $bank_data_request = [
     'clabe' => '072910007380090615',
@@ -340,21 +256,51 @@ $bank_data_request = [
     'holder_name' => 'Teofilo Velazco'
 ];
 
-$customer = $user->asOpenpayCustomer();
-$bankaccount = $customer->bankaccounts->add($bank_data_request);
+$bank_account = $user->addBankAccount($bank_data_request);
 ```
-[More info](https://www.openpay.mx/docs/api/#crear-una-cuenta-bancaria)
+### Retrieving Bank Accounts
+Coming Soon ...
 
-### Get Bank Account
+### Deleting Bank Account
+Coming Soon ...
 
-```php
-$customer = $user->asOpenpayCustomer();
-$bankaccount = $customer->bankaccounts->get('');
-```
-[More info](https://www.openpay.mx/docs/api/#crear-una-cuenta-bancaria)
+## Subscriptions
+Coming Soon ...
+### Creating Subscriptions
+Coming Soon ...
+### Checking Subscription Status
+Coming Soon ...
+### Updating Payment Information
+Coming Soon ...
+### Cancelling Subscriptions
+Coming Soon ...
+### Resuming Subscriptions
+Coming Soon ...
 
+## Subscription Trials
+Coming Soon ...
+### With Payment Method Up Front
+Coming Soon ...
+### Extending Trials
 
+## Handling Openpay Webhooks
+Coming Soon ...
+### Defining Webhook Event Handlers
+Coming Soon ...
+### Failed Subscriptions
+Coming Soon ...
+### Verifying Webhook Signatures
+Coming Soon ...
 
+## Single Charges
+Coming Soon ...
+### Simple Charge
+Coming Soon ...
+### Refunding Charges
+Coming Soon ...
+
+## Openpay SDK
+Coming Soon ...
 
 ## Testing
 

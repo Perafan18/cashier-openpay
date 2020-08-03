@@ -9,7 +9,7 @@ class Card extends Model
 {
     protected $fillable = [
         'user_id', 'name', 'openpay_id', 'type', 'brand', 'holder_name', 'card_number',
-        'expiration_month', 'expiration_year', 'bank_name', 'bank_code'
+        'expiration_month', 'expiration_year', 'bank_name', 'bank_code',
     ];
 
     /**

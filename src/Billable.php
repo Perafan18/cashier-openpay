@@ -189,7 +189,7 @@ trait Billable
             'expiration_month' => $card_openpay->expiration_month,
             'expiration_year' => $card_openpay->expiration_year,
             'bank_name' => $card_openpay->bank_name,
-            'bank_code' => $card_openpay->bank_code
+            'bank_code' => $card_openpay->bank_code,
         ]);
 
         $card->save();
@@ -218,7 +218,7 @@ trait Billable
             'clabe' => $bank_account->clabe,
             'bank_name' => $bank_account->bank_name,
             'bank_code' => $bank_account->bank_code,
-            'alias' => $bank_account->alias
+            'alias' => $bank_account->alias,
         ]);
 
         $bank_account->save();

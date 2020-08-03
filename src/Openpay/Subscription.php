@@ -6,5 +6,4 @@ use Perafan\CashierOpenpay\Openpay\Customer;
 
 class Subscription extends Base
 {
-
 }

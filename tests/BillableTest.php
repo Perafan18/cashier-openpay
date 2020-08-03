@@ -89,7 +89,7 @@ class BillableTest extends BaseTestCase
     {
         $options = [
             'method' => 'bank_account',
-            'description' => 'Cargo con banco'
+            'description' => 'Cargo con banco',
         ];
 
         $charge = self::$user->charge(100.00, $options);
@@ -128,7 +128,7 @@ class BillableTest extends BaseTestCase
     {
         $subscription_data = [
             'card' => $this->cardData(),
-            'trial_end_date' => Carbon::now()->subDay()
+            'trial_end_date' => Carbon::now()->subDay(),
         ];
 
         $subscription = self::$user->newSubscription(self::$plan->id, $subscription_data, 'test');
@@ -155,7 +155,7 @@ class BillableTest extends BaseTestCase
     {
         $subscription_data = [
             'card' => $this->cardData(),
-            'trial_end_date' => Carbon::now()->subDay()
+            'trial_end_date' => Carbon::now()->subDay(),
         ];
 
         $subscription = self::$user->newSubscription(self::$plan->id, $subscription_data);

@@ -156,7 +156,7 @@ abstract class BaseTestCase extends TestCase
             'repeat_unit' => 'month',
             'trial_days' => '30',
             'repeat_every' => '1',
-            'currency' => 'MXN'
+            'currency' => 'MXN',
         ], $options));
     }
 
@@ -186,7 +186,7 @@ abstract class BaseTestCase extends TestCase
             'postal_code' => '78230',
             'state' => 'San Luis Potosí',
             'city' => 'San Luis Potosí',
-            'country_code' => 'MX'
+            'country_code' => 'MX',
         ], $options);
     }
 }

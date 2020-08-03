@@ -8,7 +8,7 @@ use Perafan\CashierOpenpay\Openpay\BankAccount as OpenpayBankAccount;
 class BankAccount extends Model
 {
     protected $fillable = [
-        'user_id', 'openpay_id', 'holder_name', 'clabe', 'bank_name', 'bank_code', 'alias'
+        'user_id', 'openpay_id', 'holder_name', 'clabe', 'bank_name', 'bank_code', 'alias',
     ];
 
     /**

@@ -44,8 +44,7 @@ class Subscription extends Model
      */
     public function active()
     {
-        return (is_null($this->ends_at) || $this->onGracePeriod()) &&
-            ! $this->pastDue();
+        return is_null($this->ends_at) || $this->onGracePeriod();
     }
 
     /**

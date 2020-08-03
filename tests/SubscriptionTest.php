@@ -38,7 +38,7 @@ class SubscriptionTest extends BaseTestCase
         $plan = $this->createPlan();
 
         $subscription_data = [
-            'card' => $this->cardData()
+            'card' => $this->cardData(),
         ];
 
         $subscription = self::$user->newSubscription($plan->id, $subscription_data);
@@ -77,7 +77,7 @@ class SubscriptionTest extends BaseTestCase
 
         $subscription_data = [
             'card' => $this->cardData(),
-            'trial_end_date' => Carbon::now()->subDay()
+            'trial_end_date' => Carbon::now()->subDay(),
         ];
 
         $subscription = self::$user->newSubscription($plan->id, $subscription_data);

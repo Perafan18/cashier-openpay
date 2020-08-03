@@ -72,6 +72,7 @@ abstract class Base
         if (is_null($customer)) {
             return OpenpayInstance::getInstance()->{self::resource()}->getList($options);
         }
+
         return $customer->{self::resource()}->getList($options);
     }
 
@@ -82,6 +83,7 @@ abstract class Base
     {
         $klass = preg_replace('/Perafan|CashierOpenpay|Openpay|\\\\/', '', get_called_class());
         $klass = Str::lower($klass);
+
         return Str::plural($klass);
     }
 }

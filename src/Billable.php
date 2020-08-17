@@ -34,12 +34,17 @@ trait Billable
      * @param string $description
      * @return mixed
      */
-    public function refund($charge_id, $amount = null, $description = '')
+    public function refund($charge_id, $description = '', $amount = null)
     {
         $refund_data = [
             'description' => $description,
-            'amount' => $amount,
         ];
+
+        if ($amount != null) {
+            $refund_data = array_merge([
+                'amount' => $amount,
+            ], $refund_data);
+        }
 
         $customer = $this->asOpenpayCustomer();
 

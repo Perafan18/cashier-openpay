@@ -30,7 +30,7 @@
         <env name="OPENPAY_PUBLIC_KEY" value=""/>
         <env name="OPENPAY_PRIVATE_KEY" value=""/>
         <env name="OPENPAY_ID" value=""/>
-        <env name="OPENPAY_PRODUCTION_MODE" value=""/>
+        <env name="OPENPAY_PRODUCTION_MODE" value="false"/>
         <env name="OPENPAY_MODEL" value="Perafan\CashierOpenpay\Tests\Fixtures\User"/>
     </php>
 </phpunit>

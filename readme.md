@@ -293,18 +293,145 @@ Coming Soon ...
 Coming Soon ...
 
 ## Single Charges
-Coming Soon ...
+
 ### Simple Charge
-Coming Soon ...
+
+Charges are non-recurring payments, as are subscriptions.
+The charges can be created by identifying the card, the token, and submitting the credit card information.
+
+As Merchant
+```php
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
+
+$data = [
+    'method' => 'card',
+    'source_id' => 'kqgykn96i7bcs1wwhvgw',
+    'amount' => 100,
+    'currency' => 'MXN',
+    'description' => 'Cargo inicial a mi merchant',
+    'order_id' => 'oid-00051',
+    'device_session_id' => 'kR1MiQhz2otdIuUlQkbEyitIqVMiI16f',
+    'customer' => [
+        'name' => 'Juan',
+         'last_name' => 'Vazquez Juarez',
+         'phone_number' => '4423456723',
+         'email' => 'juan.vazquez@empresa.com.mx'
+    ];
+];
+
+OpenpayCharge::create($data);
+```
+
+As User
+```php
+$amount = 1000;
+
+$data = [
+    'method' => 'card',
+    'source_id' => 'randomsourceidkrngonfkogplsf',
+    'description' => 'Cargo inicial a mi merchant',
+    'order_id' => 'oid-00051',
+    'device_session_id' => 'randomdevicesessionidjnvjnfogsfp'
+];
+
+$user->charge($amount, $data);
+```
+[Openpay charge documentation][https://www.openpay.mx/docs/api/#devolver-un-cargo]
+
+### Capture Charges
+
+When a charge is created with the param `capture` as `true` is needed confirm the charge.
+ 
+```php
+$data = [
+    'method' => 'card',
+    'source_id' => 'kqgykn96i7bcs1wwhvgw',
+    'amount' => 100,
+    'description' => 'Cargo inicial a mi merchant',
+    'capture' => true,
+    ...
+];
+
+// Merchant
+$charge = OpenpayCharge::create($data);
+// User
+$charge = $user->charge($amount, $data);
+
+$capture_data = [
+    'amount' => 10.00
+];
+
+$charge->capture($capture_data);
+```
+
+[Openpay capture documentation][https://www.openpay.mx/docs/api/#confirmar-un-cargo]
+
 ### Refunding Charges
-Coming Soon ...
+
+If you need to refund a charge of a card charge, you can use the refund method. The amount to be returned will be for the total charge or a lesser amount. 
+
+As Merchant
+```php
+$charge_id = $charge->id;
+
+$refund_data = [
+    'description' => 'Devolución',
+    'amount' => 500
+];
+
+OpenpayCharge::refund($charge_id, $refund_data);
+```
+
+As User
+```php
+$charge_id = $charge->id;
+
+$user->refund($charge_id);
+```
+You can also add description and amount.
+
+```php
+$charge_id = $charge->id;
+$description = 'Devolución';
+$amount = 500;
+
+$user->refund($charge_id, $description, $amount);
+```
+[Openpay refund documentation][https://www.openpay.mx/docs/api/#devolver-un-cargo]
 
 ## Openpay SDK
-Coming Soon ...
+
+Many of Cashier's objects are wrappers around Openpay SDK objects. If you would like to interact with the Openpay objects directly, you may conveniently retrieve them using the `asOpenpay...` methods:
+
+```php
+
+$openpayCustomer = $user->asOpenpayCustomer();
+
+$openpayCustomer->name = 'Pedro';
+
+$openpayCustomer->save();
+
+$openpaySubscription = $subscription->asOpenpaySubscription();
+
+$subscription->trial_end_date = '2014-12-31';
+
+$openpaySubscription->save();
+```
 
 ## Testing
 
+To get started, add the testing version of your Openpay keys to your phpunit.xml file:
+
+```xml
+<env name="OPENPAY_PUBLIC_KEY" value=""/>
+<env name="OPENPAY_PRIVATE_KEY" value=""/>
+<env name="OPENPAY_ID" value=""/>
+```
+
+Then you can run on your term
+
 ``` bash
+$ composer install
 $ vendor/bin/phpunit
 ```
 
@@ -334,3 +461,6 @@ MIT. Please see the [license file](license.md) for more information.
 [link-travis]: https://travis-ci.org/github/Perafan18/cashier-openpay
 [link-styleci]: https://styleci.io/repos/133201440
 [link-author]: https://github.com/perafan18
+
+
+[https://www.openpay.mx/docs/api/#devolver-un-cargo]: https://www.openpay.mx/docs/api/#devolver-un-cargo

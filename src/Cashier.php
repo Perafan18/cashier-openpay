@@ -13,6 +13,7 @@ class Cashier
     {
         return config('cashier_openpay.webhook.route_name');
     }
+
     /**
      * Get the webhook relative url.
      *

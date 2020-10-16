@@ -70,7 +70,6 @@ class CashierOpenpayServiceProvider extends ServiceProvider
         });
     }
 
-
     /**
      * Boot the package's migrations.
      *
@@ -120,7 +119,6 @@ class CashierOpenpayServiceProvider extends ServiceProvider
     protected function bootPublishing()
     {
         if ($this->app->runningInConsole()) {
-
             $this->bootPublishingConfig();
 
             $this->bootPublishingController();

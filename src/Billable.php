@@ -174,9 +174,11 @@ trait Billable
      * @param array $options
      * @return Card
      */
-    public function addCard(array $card_data, array $address, array $options = [])
+    public function addCard(array $card_data, array $address = [], array $options = [])
     {
-        $card_data['address'] = $address;
+        if ($address != []) {
+            $card_data['address'] = $address;
+        }
 
         $data = array_merge($card_data, $options);
 
@@ -281,9 +283,23 @@ trait Billable
     public function asOpenpayCustomer()
     {
         if (is_null($this->openpay_id)) {
-            $this->createAsOpenpayCustomer();
+            return null;
         }
 
         return Customer::find($this->openpay_id);
+    }
+
+    /**
+     * Get the Openpay customer for the Openpay model.
+     *
+     * @return OpenpayCustomer
+     */
+    public function createOrGetOpenpayCustomer()
+    {
+        if ($this->openpay_id) {
+            return Customer::find($this->openpay_id);
+        }
+
+        $this->createAsOpenpayCustomer();
     }
 }

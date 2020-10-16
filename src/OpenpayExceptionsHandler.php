@@ -1,6 +1,6 @@
 <?php
 
-namespace Perafan\CashierOpenpay\Traits;
+namespace Perafan\CashierOpenpay;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

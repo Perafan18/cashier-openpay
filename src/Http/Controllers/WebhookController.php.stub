@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Response;
+use Log;
 use Perafan\CashierOpenpay\Http\Controllers\BaseWebhookController;
 
 class WebhookController extends BaseWebhookController
@@ -275,10 +277,13 @@ class WebhookController extends BaseWebhookController
      * Handle verification event
      *
      * @param array $payload
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function handleVerification($payload)
     {
+        Log::info('Verification payload:');
+        Log::info($payload);
 
+        return new Response;
     }
 }

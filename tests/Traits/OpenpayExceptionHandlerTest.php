@@ -11,7 +11,7 @@ use OpenpayApiError;
 use OpenpayApiRequestError;
 use OpenpayApiTransactionError;
 use Perafan\CashierOpenpay\Tests\BaseTestCase;
-use Perafan\CashierOpenpay\Traits\OpenpayExceptionsHandler;
+use Perafan\CashierOpenpay\OpenpayExceptionsHandler;
 use Throwable;
 
 class OpenpayExceptionHandlerTest extends BaseTestCase

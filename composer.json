@@ -12,7 +12,7 @@
     "homepage": "https://github.com/Perafan18/cashier-openpay",
     "require": {
         "illuminate/support": "~6|~7",
-        "openpay/sdk": "1.4.*",
+        "openpay/sdk": "dev-master",
         "ext-json": "*"
     },
     "require-dev": {

@@ -16,8 +16,9 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+
+            $table->string('openpay_id')->index();
             $table->string('name');
-            $table->integer('openpay_id');
             $table->string('openpay_status');
             $table->string('openpay_plan');
             $table->timestamp('trial_ends_at')->nullable();

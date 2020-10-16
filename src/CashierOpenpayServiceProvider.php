@@ -70,6 +70,48 @@ class CashierOpenpayServiceProvider extends ServiceProvider
         });
     }
 
+
+    /**
+     * Boot the package's migrations.
+     *
+     * @return void
+     */
+    protected function bootPublishingMigrations()
+    {
+        $prefix = 'migrations/'.date('Y_m_d_His', time());
+
+        $this->publishes([
+            __DIR__.'/../database/migrations/create_customer_columns.php.stub' => database_path($prefix.'_create_customer_columns.php'),
+            __DIR__.'/../database/migrations/create_subscriptions_table.php.stub' => database_path($prefix.'_create_subscriptions_table.php'),
+            __DIR__.'/../database/migrations/create_cards_table.php.stub' => database_path($prefix.'_create_cards_table.php'),
+            __DIR__.'/../database/migrations/create_bank_accounts_table.php.stub' => database_path($prefix.'_create_bank_accounts_table.php'),
+        ], 'cashier-openpay-migrations');
+    }
+
+    /**
+     * Boot the package's controller.
+     *
+     * @return void
+     */
+    protected function bootPublishingController()
+    {
+        $this->publishes([
+            __DIR__.'/Http/Controllers/WebhookController.php.stub' => app_path('Http/Controllers/WebhookController.php'),
+        ], 'cashier-openpay-webhook-controller');
+    }
+
+    /**
+     * Boot the package's config file.
+     *
+     * @return void
+     */
+    protected function bootPublishingConfig()
+    {
+        $this->publishes([
+            __DIR__.'/../config/cashier_openpay.php' => config_path('cashier_openpay.php'),
+        ], 'cashier-openpay-configs');
+    }
+
     /**
      * Boot the package's publishable resources.
      *
@@ -78,22 +120,12 @@ class CashierOpenpayServiceProvider extends ServiceProvider
     protected function bootPublishing()
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__.'/../config/cashier_openpay.php' => config_path('cashier_openpay.php'),
-            ], 'cashier-openpay-configs');
 
-            $this->publishes([
-                __DIR__.'/Http/Controllers/WebhookController.php.stub' => app_path('Http/Controllers/WebhookController.php'),
-            ], 'cashier-openpay-webhook-controller');
+            $this->bootPublishingConfig();
 
-            $prefix = 'migrations/'.date('Y_m_d_His', time());
+            $this->bootPublishingController();
 
-            $this->publishes([
-                __DIR__.'/../database/migrations/create_customer_columns.php.stub' => database_path($prefix.'_create_customer_columns.php'),
-                __DIR__.'/../database/migrations/create_subscriptions_table.php.stub' => database_path($prefix.'_create_subscriptions_table.php'),
-                __DIR__.'/../database/migrations/create_cards_table.php.stub' => database_path($prefix.'_create_cards_table.php'),
-                __DIR__.'/../database/migrations/create_bank_accounts_table.php.stub' => database_path($prefix.'_create_bank_accounts_table.php'),
-            ], 'cashier-openpay-migrations');
+            $this->bootPublishingMigrations();
         }
     }
 }

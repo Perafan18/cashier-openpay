@@ -45,14 +45,14 @@ class User extends Authenticatable
 }
 ```
 
-Cashier assumes your Billable model will be the App\User class that ships with Laravel. If you wish to change this you can specify a different model in your `.env` file:
+Cashier assumes your Billable model will be the `App\User class that ships with Laravel. If you wish to change this you can specify a different model in your `.env` file:
 
 ```dotenv
 OPENPAY_MODEL=App\User
 ```
 
 ### API Keys
-Next, you should configure your Openpay keys in your .env file. You can retrieve your Stripe API keys from the Openpay control panel.
+Next, you should configure your Openpay keys in your .env file. You can retrieve your Openpay API keys from the Openpay control panel.
 
 ```dotenv
 OPENPAY_PUBLIC_KEY=-your-openpay-public-key-
@@ -68,28 +68,15 @@ By convenience and security, the sandbox mode is activated by default in the cli
 OPENPAY_PRODUCTION_MODE=false
 ```
 
-### OpenpayJS
+### Logging
 
-Paddle relies on its own JavaScript library to initiate the Paddle checkout widget. You can load the JavaScript library by placing the @paddleJS directive right before your application layout's closing </head> tag:
+Cashier allows you to specify the log channel to be used when logging all Openpay related exceptions.
 
-``` html
-<!DOCTYPE html>
-<html>
-<head>
-    ...
-    @openpayJSLoad
-</head>
-<body>
-    ...
-
-    @openpayJSInit
-    // or if you are using Jquery
-    @openpayJqueryJSInit
-</body>
-</html>
+```dotenv
+OPENPAY_LOG_ERRORS=true
 ```
 
-### Logging
+### Show openpay errors (Optional)`
 
 If you want to catch all the openpay exceptions add in your `app/Exceptions/Handler.php` 
 
@@ -98,7 +85,7 @@ If you want to catch all the openpay exceptions add in your `app/Exceptions/Hand
 
 namespace App\Exceptions;
 
-use Perafan\CashierOpenpay\Traits\OpenpayExceptionsHandler;
+use Perafan\CashierOpenpay\OpenpayExceptionsHandler;
 ...
 
 class Handler extends ExceptionHandler
@@ -117,20 +104,11 @@ class Handler extends ExceptionHandler
 }
 ```
 
-Cashier allows you to specify the log channel to be used when logging all Openpay related exceptions.:
-
-```dotenv
-OPENPAY_LOG_ERRORS=true
-```
-
-### Show openpay errors (Optional)
-
 To render the error response in blade you could use the follow snippets.
-**Is necessary use the OpenpayExceptionsHandler**
 
-#### Using [bootstrap](https://getbootstrap.com/)
+#### Show errors with [bootstrap](https://getbootstrap.com/)
 
-```
+```blade
 @if($errors->cashier->isNotEmpty())
     <div class="alert alert-danger" role="alert">
         @foreach ($errors->cashier->keys() as $key)
@@ -140,9 +118,9 @@ To render the error response in blade you could use the follow snippets.
 @endif
 ```
 
-#### Using [tailwindcss](https://tailwindcss.com/)
+#### Show errors with [tailwindcss](https://tailwindcss.com/)
 
-```
+```blade
 @if($errors->cashier->isNotEmpty())
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
         @foreach ($errors->cashier->keys() as $key)
@@ -152,9 +130,9 @@ To render the error response in blade you could use the follow snippets.
 @endif
 ```
 
-You can modify the response creating your own handler.
-
 #### Your own Openpay Exceptions Handler (Optional)
+
+You can modify the response creating your own handler.
 
 ```php
 trait MyOpenpayExceptionsHandler
@@ -168,236 +146,788 @@ trait MyOpenpayExceptionsHandler
         $this->parentRenderOpenpayException($request, $exception);
         
         //your code
-
     }
 } 
 ```
 
-## Customers
+## Use
 
-### Creating Customers
+### Customers
 
-Occasionally, you may wish to create a Stripe customer without beginning a subscription. You may accomplish this using the createAsStripeCustomer method:
 
-```php
-$openpayCustomer = $user->createAsOpenpayCustomer();
-```
+**On a User:**
 
-Once the customer has been created in Stripe, you may begin a subscription at a later date. You can also use an optional $options array to pass in any additional parameters which are supported by the Stripe API:
+Add a new customer to a merchant:
 
 ```php
-$options = [
-    'phone_number' => '3321456789',
-];
+$user->createAsOpenpayCustomer();
 
-$openpayCustomer = $user->createAsOpenpayCustomer($options);
-```
-
-You may use the asStripeCustomer method if you want to return the customer object if the billable entity is already a customer within Stripe:
-
-
-```php
-$openpayCustomer = $user->asOpenpayCustomer();
-```
-
-### Updating Customers
-Occasionally, you may wish to update the Stripe customer directly with additional information. You may accomplish this using the updateStripeCustomer method:
-
-```php
-$openpayCustomer = $user->asOpenpayCustomer();
-
-$openpayCustomer->name = 'Pedro';
-$openpayCustomer->phone_number = '332165987845';
-
-$openpayCustomer->save();
-```
-
-## Cards
-Coming Soon ...
-
-### Storing Card
-```php
-$card_data = [
-    'holder_name' => 'Taylor Otwell',
-    'card_number' => '4111111111111111',
-    'cvv2' => '123',
-    'expiration_month' => '12',
-    'expiration_year' => '30',
-];
-
-$address = [
-   'line1' => 'Avenida Carranza 1115',
-   'postal_code' => '78230',
-   'state' => 'San Luis Potosí',
-   'city' => 'San Luis Potosí',
-   'country_code' => 'MX'
-];
-
-$extra_data = [
-    'device_session_id' => 'qwertyuiopasdfghjklñ1234567890',
-];
-
-$card = $user->addCard($card_data, $address, $extra_data);
-```
-
-### Retrieving Cards
-Coming Soon ...
-### Deleting Card
-Coming Soon ...
-
-## Bank Accounts
-Coming Soon ...
-
-### Storing Bank Account
-```php
-$bank_data_request = [
-    'clabe' => '072910007380090615',
-    'alias' => 'Cuenta principal',
-    'holder_name' => 'Teofilo Velazco'
-];
-
-$bank_account = $user->addBankAccount($bank_data_request);
-```
-### Retrieving Bank Accounts
-Coming Soon ...
-
-### Deleting Bank Account
-Coming Soon ...
-
-## Subscriptions
-Coming Soon ...
-### Creating Subscriptions
-Coming Soon ...
-### Checking Subscription Status
-Coming Soon ...
-### Updating Payment Information
-Coming Soon ...
-### Cancelling Subscriptions
-Coming Soon ...
-### Resuming Subscriptions
-Coming Soon ...
-
-## Subscription Trials
-Coming Soon ...
-### With Payment Method Up Front
-Coming Soon ...
-### Extending Trials
-
-## Handling Openpay Webhooks
-Coming Soon ...
-### Defining Webhook Event Handlers
-Coming Soon ...
-### Failed Subscriptions
-Coming Soon ...
-### Verifying Webhook Signatures
-Coming Soon ...
-
-## Single Charges
-
-### Simple Charge
-
-Charges are non-recurring payments, as are subscriptions.
-The charges can be created by identifying the card, the token, and submitting the credit card information.
-
-As Merchant
-```php
-use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
+//Or you can send additional data
 
 $data = [
-    'method' => 'card',
-    'source_id' => 'kqgykn96i7bcs1wwhvgw',
-    'amount' => 100,
-    'currency' => 'MXN',
+    'name' => 'Teofilo',
+    'last_name' => 'Velazco',
+    'phone_number' => '4421112233',
+    'address' => [
+        'line1' => 'Privada Rio No. 12',
+        'line2' => 'Co. El Tintero',
+        'line3' => '',
+        'postal_code' => '76920',
+        'state' => 'Querétaro',
+        'city' => 'Querétaro.',
+        'country_code' => 'MX'
+    ]
+];
+
+$openpay_customer = $user->createAsOpenpayCustomer($data);
+````
+
+Get a customer:
+```php
+$openpay_customer = $user->asOpenpayCustomer();
+```
+
+Update a customer:
+```php
+$openpay_customer  = $user->asOpenpayCustomer();
+$openpay_customer->name = 'Juan';
+$openpay_customer->last_name = 'Godinez';
+$openpay_customer->save();
+```
+
+Delete a customer:
+```php
+$openpay_customer = $user->asOpenpayCustomer();
+$openpay_customer->delete();
+```
+
+**On a merchant:**
+
+Add a new customer to a merchant:
+
+```php
+use Perafan\CashierOpenpay\Openpay\Customer as OpenpayCustomer;
+
+OpenpayCustomer::create([
+    'name' => 'Teofilo',
+    'last_name' => 'Velazco',
+    'email' => 'teofilo@payments.com',
+    'phone_number' => '4421112233',
+    'address' => [
+        'line1' => 'Privada Rio No. 12',
+        'line2' => 'Co. El Tintero',
+        'line3' => '',
+        'postal_code' => '76920',
+        'state' => 'Querétaro',
+        'city' => 'Querétaro.',
+        'country_code' => 'MX'
+    ]
+]);
+````
+
+Get a customer:
+```php
+use Perafan\CashierOpenpay\Openpay\Customer as OpenpayCustomer;
+
+$customer = OpenpayCustomer::find('a9ualumwnrcxkl42l6mh');
+```
+
+Get the list of customers:
+```php
+use Perafan\CashierOpenpay\Openpay\Customer as OpenpayCustomer;
+
+$customer_list = OpenpayCustomer::all();
+
+// with filters
+
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$customer_list = OpenpayCustomer::all($filters);
+```
+
+Update a customer:
+```php
+use Perafan\CashierOpenpay\Openpay\Customer as OpenpayCustomer;
+
+$customer = OpenpayCustomer::find('a9ualumwnrcxkl42l6mh');
+$customer->name = 'Juan';
+$customer->last_name = 'Godinez';
+$customer->save();
+```
+
+Delete a customer:
+```php
+use Perafan\CashierOpenpay\Openpay\Customer as OpenpayCustomer;
+
+$customer = OpenpayCustomer::find('a9ualumwnrcxkl42l6mh');
+$customer->delete();
+```
+
+#### Cards ####
+
+**On a user:**
+
+Add a card:
+```php
+$card_data = [
+	'holder_name' => 'Teofilo Velazco',
+	'card_number' => '4916394462033681',
+	'cvv2' => '123',
+	'expiration_month' => '12',
+	'expiration_year' => '15'
+];
+
+$card = $user->addCard($card_data);
+
+// with token
+
+$card_data = [
+    'token_id' => 'tokgslwpdcrkhlgxqi9a',
+    'device_session_id' => '8VIoXj0hN5dswYHQ9X1mVCiB72M7FY9o'
+];
+
+$card = $user->addCard($card_data);
+
+// with address
+
+$address_data = [
+    'line1' => 'Privada Rio No. 12',
+    'line2' => 'Co. El Tintero',
+    'line3' => '',
+    'postal_code' => '76920',
+    'state' => 'Querétaro',
+    'city' => 'Querétaro.',
+    'country_code' => 'MX'
+];
+
+$card = $user->addCard($card_data, $address_data);
+```
+
+Get a card:
+```php
+use Perafan\CashierOpenpay\Card;
+
+$card = $user->cards->first;
+//or
+$card = Card::find(1);
+
+$openpay_card = $card->asOpenpayCard();
+```
+
+Get user cards:
+```php
+use Perafan\CashierOpenpay\Card;
+
+$cards = $user->cards;
+// or
+$cards = Card::where('user_id', $user->id)->get();
+```
+
+Get user cards from Openpay
+```php
+use Perafan\CashierOpenpay\Card;
+use Perafan\CashierOpenpay\Openpay\Card as OpenpayCard;
+
+$cards = $user->cards;
+
+$openpay_cards = $cards->map(function($card) {
+    return $card->asOpenpayCard();
+});
+
+// or
+
+$cards = Card::where('user_id', $user->id)->get();
+
+$openpay_cards = $cards->map(function($card) {
+    return $card->asOpenpayCard();
+});
+
+// or 
+
+$openpay_customer = $user->asOpenpayCustomer();
+
+$openpay_cards = OpenpayCard::all([], $openpay_customer);
+
+// with filters
+
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$openpay_cards = OpenpayCard::all($filters, $openpay_customer);
+```
+
+Delete a card
+```php
+use Perafan\CashierOpenpay\Card;
+
+$card = $user->cards->first;
+//or
+$card = Card::find(1);
+
+$openpay_card = $card->asOpenpayCard();
+$deleted_card = $openpay_card->delete();
+
+if (!is_array($deleted_card)) {
+    //The card was deleted in Openpay
+    $card->delete();
+}
+```
+
+**On a merchant:**
+
+Add a card:
+```php
+use Perafan\CashierOpenpay\Openpay\Card as OpenpayCard;
+
+$card_data = [
+	'holder_name' => 'Teofilo Velazco',
+	'card_number' => '4916394462033681',
+	'cvv2' => '123',
+	'expiration_month' => '12',
+	'expiration_year' => '15'
+];
+
+$openpay_card = OpenpayCard::add($card_data);
+
+// with token
+
+$card_data = [
+    'token_id' => 'tokgslwpdcrkhlgxqi9a',
+    'device_session_id' => '8VIoXj0hN5dswYHQ9X1mVCiB72M7FY9o'
+];
+
+$openpay_card = OpenpayCard::add($card_data);
+
+// with address
+
+$address_data = [
+    'line1' => 'Privada Rio No. 12',
+    'line2' => 'Co. El Tintero',
+    'line3' => '',
+    'postal_code' => '76920',
+    'state' => 'Querétaro',
+    'city' => 'Querétaro.',
+    'country_code' => 'MX'
+];
+
+$card_data['address'] = $address_data;
+
+$openpay_card = OpenpayCard::add($card_data);
+```
+
+Get a card:
+```php
+use Perafan\CashierOpenpay\Openpay\Card as OpenpayCard;
+
+$openpay_card = OpenpayCard::find('k9pn8qtsvr7k7gxoq1r5');
+```
+
+Get the list of cards:
+```php
+use Perafan\CashierOpenpay\Openpay\Card as OpenpayCard;
+
+$openpay_card = OpenpayCard::all();
+
+// with filters
+
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$openpay_card = OpenpayCard::all($filters);
+```
+
+Delete a card:
+```php
+use Perafan\CashierOpenpay\Openpay\Card as OpenpayCard;
+
+$openpay_card = OpenpayCard::find('k9pn8qtsvr7k7gxoq1r5');
+$openpay_card->delete();
+//Card was not delete on your database, only was deleted in openpay
+```
+	
+#### Bank Accounts ####
+
+Add a bank account to a customer:
+```php
+$bank_data = [
+	'clabe' => '072910007380090615',
+	'alias' => 'Cuenta principal',
+	'holder_name' => 'Teofilo Velazco'
+];
+
+$bank_account = $user->addBankAccount($bank_data);
+```
+
+Get a bank account
+```php
+use Perafan\CashierOpenpay\BankAccount;
+
+$bank_account = $user->bank_accounts->first;
+// or
+$bank_account = BankAccount::where('user_id', $user->id)->first();
+
+$openpay_bank_account = $bank_account->asOpenpayBankAccount();
+```
+
+Get user bank accounts:
+```php
+use Perafan\CashierOpenpay\BankAccount;
+
+$bank_accounts = $user->bank_accounts;
+// or
+$bank_accounts = BankAccount::where('user_id', $user->id)->get();
+```
+
+Get user bank accounts from Openpay:
+```php
+use Perafan\CashierOpenpay\BankAccount;
+use Perafan\CashierOpenpay\Openpay\BankAccount as OpenpayBankAccount;
+
+$bank_accounts = $user->bank_accounts;
+
+$openpay_bank_accounts = $bank_accounts->map(function($bank_account) {
+    return $bank_account->asOpenpayBankAccount();
+});
+
+// or
+
+$bank_accounts = BankAccount::where('user_id', $user->id)->get();
+
+$openpay_bank_accounts = $bank_accounts->map(function($bank_account) {
+    return $bank_account->asOpenpayBankAccount();
+});
+
+// or 
+
+$openpay_customer = $user->asOpenpayCustomer();
+
+$openpay_bank_accounts = OpenpayBankAccount::all([], $openpay_customer);
+
+// with filters
+
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$openpay_bank_accounts = OpenpayBankAccount::all($filters, $openpay_customer);
+```
+
+Delete a bank account:
+```php
+use Perafan\CashierOpenpay\BankAccount;
+
+$bank_account = $user->bank_accounts->first;
+// or
+$bank_account = BankAccount::where('user_id', $user->id)->first();
+
+$openpay_bank_account = $bank_account->asOpenpayBankAccount();
+
+$deleted_bank_account = $openpay_bank_account->delete();
+
+if (!is_array($deleted_bank_account)) {
+    //The card was deleted in Openpay
+    $bank_account->delete();
+}
+```
+
+	
+#### Charges ####
+
+**On a Customer:**
+
+Make a charge on a customer:
+```php
+$charge_data = [
+	'source_id' => 'tvyfwyfooqsmfnaprsuk',
+	'method' => 'card',
+	'currency' => 'MXN',
     'description' => 'Cargo inicial a mi merchant',
     'order_id' => 'oid-00051',
     'device_session_id' => 'kR1MiQhz2otdIuUlQkbEyitIqVMiI16f',
-    'customer' => [
-        'name' => 'Juan',
-         'last_name' => 'Vazquez Juarez',
-         'phone_number' => '4423456723',
-         'email' => 'juan.vazquez@empresa.com.mx'
-    ];
 ];
 
-OpenpayCharge::create($data);
+$openpay_charge = $user->charge(100, $charge_data);
 ```
 
-As User
+Get a charge:
 ```php
-$amount = 1000;
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
 
-$data = [
-    'method' => 'card',
-    'source_id' => 'randomsourceidkrngonfkogplsf',
-    'description' => 'Cargo inicial a mi merchant',
-    'order_id' => 'oid-00051',
-    'device_session_id' => 'randomdevicesessionidjnvjnfogsfp'
-];
-
-$user->charge($amount, $data);
-```
-[Openpay charge documentation][https://www.openpay.mx/docs/api/#devolver-un-cargo]
-
-### Capture Charges
-
-When a charge is created with the param `capture` as `true` is needed confirm the charge.
- 
-```php
-$data = [
-    'method' => 'card',
-    'source_id' => 'kqgykn96i7bcs1wwhvgw',
-    'amount' => 100,
-    'description' => 'Cargo inicial a mi merchant',
-    'capture' => true,
-    ...
-];
-
-// Merchant
-$charge = OpenpayCharge::create($data);
-// User
-$charge = $user->charge($amount, $data);
-
-$capture_data = [
-    'amount' => 10.00
-];
-
-$charge->capture($capture_data);
+$openpay_charge = OpenpayCharge::find('a9ualumwnrcxkl42l6mh');
 ```
 
-[Openpay capture documentation][https://www.openpay.mx/docs/api/#confirmar-un-cargo]
-
-### Refunding Charges
-
-If you need to refund a charge of a card charge, you can use the refund method. The amount to be returned will be for the total charge or a lesser amount. 
-
-As Merchant
+Get list of charges per user:
 ```php
-$charge_id = $charge->id;
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
 
-$refund_data = [
-    'description' => 'Devolución',
-    'amount' => 500
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
 ];
 
-OpenpayCharge::refund($charge_id, $refund_data);
+$openpay_customer = $user->asOpenpayCustomer();
+
+$openpay_charge = OpenpayCharge::all($filters, $openpay_customer);
 ```
 
-As User
+Make a capture:
 ```php
-$charge_id = $charge->id;
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
 
+$capture_data = ['amount' => 150.00];
+
+$openpay_charge = OpenpayCharge::find('a9ualumwnrcxkl42l6mh');
+
+$openpay_charge->capture($capture_data);
+```
+
+Make a refund:
+```php
+// Send charge id as first param 
+$charge_id = 'tvyfwyfooqsmfnaprsuk';
 $user->refund($charge_id);
-```
-You can also add description and amount.
+//or
 
-```php
-$charge_id = $charge->id;
-$description = 'Devolución';
-$amount = 500;
+$description = 'Reembolso';
+$user->refund($charge_id, $description);
 
+//or
+$amount = 150.00;
 $user->refund($charge_id, $description, $amount);
 ```
-[Openpay refund documentation][https://www.openpay.mx/docs/api/#devolver-un-cargo]
+
+**On a Merchant:**
+
+Make a charge on a merchant:
+```php
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
+
+$charge_data = [
+	'method' => 'card',
+	'source_id' => 'krfkkmbvdk3hewatruem',
+	'amount' => 100,
+	'description' => 'Cargo inicial a mi merchant',
+	'order_id' => 'ORDEN-00071'
+];
+
+$openpay_charge = OpenpayCharge::create($charge_data);
+```
+	
+Get a charge:
+```php
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
+
+$openpay_charge = OpenpayCharge::find('tvyfwyfooqsmfnaprsuk');
+```
+	
+Get list of charges:
+```php
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
+
+$openpay_charges = OpenpayCharge::all();
+
+// with filters
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$openpay_charges = OpenpayCharge::all($filters);
+```
+	
+Make a capture:
+```php
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
+
+$capture_data = ['amount' => 150.00];
+
+$openpay_charge = OpenpayCharge::find('tvyfwyfooqsmfnaprsuk');
+$capture_data->capture($capture_data);
+```
+	
+Make a refund:
+```php
+use Perafan\CashierOpenpay\Openpay\Charge as OpenpayCharge;
+
+$refund_data = ['description' => 'Devolución'];
+
+$openpay_charge = OpenpayCharge::find('tvyfwyfooqsmfnaprsuk');
+$openpay_charge->refund($refund_data);
+```
+
+#### Transfers ####
+
+Make a transfer:
+```php
+$transfer_data = [
+	'customer_id' => 'aqedin0owpu0kexr2eor',
+	'amount' => 12.50,
+	'description' => 'Cobro de Comisión',
+	'order_id' => 'ORDEN-00061'
+];
+
+$openpay_customer = $user->asOpenpayCustomer();
+$transfer = $openpay_customer->transfers->create($transfer_data);
+```
+	
+Get a transfer:
+```php
+$openpay_customer = $user->asOpenpayCustomer();
+$transfer = $openpay_customer->transfers->get('tyxesptjtx1bodfdjmlb');
+```
+
+Get list of transfers:
+```php
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$openpay_customer = $user->asOpenpayCustomer();
+$transfer_list = $openpay_customer->transfers->getList($filters);
+```
+
+#### Payouts ####
+
+**On a Customer:**
+
+Make a payout on a customer:
+```php
+$payout_data = [
+	'method' => 'card',
+	'destination_id' => 'k9pn8qtsvr7k7gxoq1r5',
+	'amount' => 1000,
+	'description' => 'Retiro de saldo semanal',
+	'order_id' => 'ORDEN-00062'
+];
+
+$openpay_customer = $user->asOpenpayCustomer();
+$payout = $openpay_customer->payouts->create($payout_data);
+```
+	
+Get a payout:
+```php
+$openpay_customer = $user->asOpenpayCustomer();
+$payout = $openpay_customer->payouts->get('tysznlyigrkwnks6eq2c');
+```
+	
+Get list pf payouts:
+```php
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$openpay_customer = $user->asOpenpayCustomer();
+$payout_list = $customer->payouts->getList($filters);
+```
+
+#### Fees ####
+Pending ...
+
+#### Plans ####
+
+Add a plan:
+```php
+use Perafan\CashierOpenpay\Openpay\Plan as OpenpayPlan;
+
+$plan_data = [
+	'amount' => 150.00,
+	'status_after_retry' => 'cancelled',
+	'retry_times' => 2,
+	'name' => 'Plan Curso Verano',
+	'repeat_unit' => 'month',
+	'trial_days' => '30',
+	'repeat_every' => '1',
+	'currency' => 'MXN'
+];
+
+$openpay_plan = OpenpayPlan::add($plan_data);
+```
+	
+Get a plan:
+```php
+use Perafan\CashierOpenpay\Openpay\Plan as OpenpayPlan;
+
+$openpay_plan = OpenpayPlan::find('pduar9iitv4enjftuwyl');
+```
+	
+Get list of plans: 
+```php
+use Perafan\CashierOpenpay\Openpay\Plan as OpenpayPlan;
+
+$openpay_plans = OpenpayPlan::all();
+// with filters
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$openpay_plans = OpenpayPlan::all($filters);
+```
+
+Update a plan:
+```php
+use Perafan\CashierOpenpay\Openpay\Plan as OpenpayPlan;
+
+$openpay_plan = OpenpayPlan::find('pduar9iitv4enjftuwyl');
+$openpay_plan->name = 'Plan Curso de Verano 2021';
+$openpay_plan->save();
+```
+	
+Delete a plan:
+```php
+use Perafan\CashierOpenpay\Openpay\Plan as OpenpayPlan;
+
+$openpay_plan = OpenpayPlan::find('pduar9iitv4enjftuwyl');
+$openpay_plan->delete();
+```
+
+Get list of subscriptors of a plan: 
+```php
+use Perafan\CashierOpenpay\Openpay\Plan as OpenpayPlan;
+
+$openpay_plan = OpenpayPlan::find('pduar9iitv4enjftuwyl');
+
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$subscription_list = $openpay_plan->subscriptions->getList($filters);
+```
+
+#### Subscriptions ####
+
+Add a subscription:
+```php
+$plan_id = 'pduar9iitv4enjftuwyl';
+
+$subscription = $user->newSubscription($plan_id);
+
+// Add the name of subscription
+$options = [
+	'trial_end_date' => '2021-01-01', 
+	'card_id' => 'konvkvcd5ih8ta65umie'
+];
+
+$subscription = $user->newSubscription($plan_id, $options);
+
+// Add the name of subscription
+$name = 'plan_verano_2021';
+
+$subscription = $user->newSubscription($plan_id, $options, $name);
+```
+
+Checking Subscription Status
+```php
+$name = 'plan_verano_2021';
+$user->subscribed($name);
+
+$name_2027 = 'plan_verano_2027';
+$user->subscribed($name_2027);
+
+$plan_id = 'pduar9iitv4enjftuwyl';
+$user->subscribed($name, $plan_id); 
+
+$user->subscribed($name, 'ptyui9iit40nfwftuwyl'); 
+```
+
+```php
+$plans = [
+    'pduar9iitv4enjftuwyl',
+    'ptyui9iit40nfwftuwyl'
+];
+
+$user->subscribedToPlan($plans);
+```
+
+Subscription Trial
+```php
+$subscription = $user->subscription();
+
+$subscription->onTrial();
+```
+
+
+Checking User Trial
+```php
+$subscription_name = 'plan_verano_2027';
+
+$user->onTrial($subscription_name); 
+```
+
+Get a subscription:
+```php
+use Perafan\CashierOpenpay\Subscription;
+$subscription = $user->subscriptions->first;
+// or
+$subscription = Subscription::find('s7ri24srbldoqqlfo4vp');
+
+$subscription->asOpenpaySubscription();
+```
+
+Get list of subscriptions:
+```php
+$openpay = Openpay::getInstance('moiep6umtcnanql3jrxp', 'sk_3433941e467c1055b178ce26348b0fac');
+
+$filters = [
+	'creation[gte]' => '2020-01-01',
+	'creation[lte]' => '2020-12-31',
+	'offset' => 0,
+	'limit' => 5
+];
+
+$customer = $openpay->customers->get('a9ualumwnrcxkl42l6mh');
+$subscriptionList = $customer->subscriptions->getList($filters);
+```
+	
+Update a subscription:
+```php
+$openpay = Openpay::getInstance('moiep6umtcnanql3jrxp', 'sk_3433941e467c1055b178ce26348b0fac');
+
+$customer = $openpay->customers->get('a9ualumwnrcxkl42l6mh');
+$subscription = $customer->subscriptions->get('s7ri24srbldoqqlfo4vp');
+$subscription->trial_end_date = '2021-12-31';
+$subscription->save();
+```
+	
+Delete a subscription:
+```php
+$openpay = Openpay::getInstance('moiep6umtcnanql3jrxp', 'sk_3433941e467c1055b178ce26348b0fac');
+
+$customer = $openpay->customers->get('a9ualumwnrcxkl42l6mh');
+$subscription = $customer->subscriptions->get('s7ri24srbldoqqlfo4vp');
+$subscription->delete();
+```
 
 ## Openpay SDK
 
@@ -413,7 +943,7 @@ $openpayCustomer->save();
 
 $openpaySubscription = $subscription->asOpenpaySubscription();
 
-$subscription->trial_end_date = '2014-12-31';
+$subscription->trial_end_date = '2021-12-31';
 
 $openpaySubscription->save();
 ```
@@ -454,12 +984,12 @@ MIT. Please see the [license file](license.md) for more information.
 [ico-version]: https://img.shields.io/packagist/v/perafan/cashier-openpay.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/perafan/cashier-openpay.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/Perafan18/cashier-openpay/master.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/133201440/shield
+[ico-styleci]: https://styleci.io/repos/133202140/shield
 
 [link-packagist]: https://packagist.org/packages/perafan/cashier-openpay
 [link-downloads]: https://packagist.org/packages/perafan/cashier-openpay
 [link-travis]: https://travis-ci.org/github/Perafan18/cashier-openpay
-[link-styleci]: https://styleci.io/repos/133201440
+[link-styleci]: https://styleci.io/repos/133202140
 [link-author]: https://github.com/perafan18
 
 

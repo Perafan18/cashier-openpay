@@ -17,7 +17,7 @@ class CreateBankAccountsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
 
-            $table->integer('openpay_id');
+            $table->string('openpay_id')->index();
             $table->string('holder_name');
             $table->string('clabe');
             $table->string('bank_name');

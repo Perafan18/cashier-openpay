@@ -17,7 +17,7 @@ class CreateCardsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
 
-            $table->integer('openpay_id');
+            $table->string('openpay_id')->index();
             $table->string('type');
             $table->string('brand')->nullable();
             $table->string('holder_name');

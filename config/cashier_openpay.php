@@ -1,8 +1,26 @@
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Production mode
+    |--------------------------------------------------------------------------
+    |
+    | After approval from the openpay team, you can change this to true and
+    | change the testing API keys from the production API keys.
+    |
+    */
 
     'production_mode' => env('OPENPAY_PRODUCTION_MODE', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Openpay API Keys
+    |--------------------------------------------------------------------------
+    |
+    | You can retrieve your Openpay API keys from the Openpay control panel.
+    |
+    */
 
     'id' => env('OPENPAY_ID', ''),
 
@@ -10,7 +28,17 @@ return [
 
     'public_key' => env('OPENPAY_PUBLIC_KEY', ''),
 
-    'log_errors' => env('OPENPAY_LOG_ERRORS', true),
+    /*
+    |--------------------------------------------------------------------------
+    | Log Errors
+    |--------------------------------------------------------------------------
+    |
+    | Set as true if you want to see the data from Openpay exceptions (HTTP
+    | requests) in your laravel.log
+    | Note: Is necessary use the OpenpayExceptionsHandler
+    */
+
+    'log_errors' => env('OPENPAY_LOG_ERRORS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,4 +52,29 @@ return [
     */
 
     'model' => env('OPENPAY_MODEL', App\User::class),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook
+    |--------------------------------------------------------------------------
+    |
+    | Cashier Openpay provides a WebhookController with the methods to add your
+    | own business logic.
+    | Note: First you need to publish the tag "cashier-openpay-webhook-controller"
+    |
+    | You may change the url of the webhook, the route name, the controller path
+    | or maybe the method.
+    |
+    */
+
+    'webhook' => [
+
+        'route_name' => env('OPENPAY_WEBHOOK_ROUTE', 'openpay.webhooks.handle'),
+
+        'url' => env('OPENPAY_WEBHOOK_URL', 'openpay/webhooks/handle'),
+
+        'controller' => env('OPENPAY_WEBHOOK_CONTROLLER', '\App\Http\Controllers\WebhookController'),
+
+        'method' => env('OPENPAY_WEBHOOK_METHOD', 'handleWebhook')
+    ]
 ];

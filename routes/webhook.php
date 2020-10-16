@@ -1,3 +1,9 @@
 <?php
 
-Route::name('openpay.webhooks.handle')->post('openpay/webhooks/handle', '\App\Http\Controllers\WebhookController@handleWebhook');
+use Illuminate\Support\Facades\Route;
+use Perafan\CashierOpenpay\Cashier;
+
+Route::name(Cashier::webhookRouteName())->post(
+    Cashier::webhookUrl(),
+    Cashier::webhookController() . '@' . Cashier::webhookMethod()
+);

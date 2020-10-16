@@ -5,5 +5,5 @@ use Perafan\CashierOpenpay\Cashier;
 
 Route::name(Cashier::webhookRouteName())->post(
     Cashier::webhookUrl(),
-    Cashier::webhookController() . '@' . Cashier::webhookMethod()
+    Cashier::webhookController().'@'.Cashier::webhookMethod()
 );

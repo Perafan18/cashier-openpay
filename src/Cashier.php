@@ -5,7 +5,7 @@ namespace Perafan\CashierOpenpay;
 class Cashier
 {
     /**
-     * Get the webhook route name
+     * Get the webhook route name.
      *
      * @return string
      */

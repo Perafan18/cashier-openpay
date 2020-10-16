@@ -76,5 +76,5 @@ return [
         'controller' => env('OPENPAY_WEBHOOK_CONTROLLER', '\App\Http\Controllers\WebhookController'),
 
         'method' => env('OPENPAY_WEBHOOK_METHOD', 'handleWebhook')
-    ]
+    ],
 ];

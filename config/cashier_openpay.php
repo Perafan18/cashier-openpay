@@ -35,7 +35,7 @@ return [
     |
     | Set as true if you want to see the data from Openpay exceptions (HTTP
     | requests) in your laravel.log
-    | Note: Is necessary use the OpenpayExceptionsHandler
+    | Note: You need to use OpenpayExceptionsHandler
     */
 
     'log_errors' => env('OPENPAY_LOG_ERRORS', false),
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'model' => env('OPENPAY_MODEL', App\User::class),
+    'model' => env('OPENPAY_MODEL', App\Models\User::class),
 
     /*
     |--------------------------------------------------------------------------

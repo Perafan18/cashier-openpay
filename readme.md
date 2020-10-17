@@ -14,6 +14,11 @@ Require the Cashier package for Openpay with Composer:
 composer require perafan/cashier-openpay
 ```
 
+| CashierOpenpay | Laravel  |
+| :------------: |:--------:| 
+| 1.X            | 7.X      | 
+| 2.X            | 8.X      |
+
 Run to publish migrations, WebHookController and config file.
 
 ```bash
@@ -45,10 +50,10 @@ class User extends Authenticatable
 }
 ```
 
-Cashier assumes your Billable model will be the `App\User class that ships with Laravel. If you wish to change this you can specify a different model in your `.env` file:
+Cashier assumes your Billable model will be the `App\Models\User class that ships with Laravel. If you wish to change this you can specify a different model in your `.env` file:
 
 ```dotenv
-OPENPAY_MODEL=App\User
+OPENPAY_MODEL=App\Models\User
 ```
 
 ### API Keys

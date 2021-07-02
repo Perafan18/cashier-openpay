@@ -3,8 +3,9 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Build Status][ico-travis]][link-travis]
-[![StyleCI][ico-styleci]][link-styleci]
+![StyleCI](https://github.styleci.io/repos/133201440/shield?branch=master)
 
+![Banner](https://banners.beyondco.de/Cashier%20OpenPay.png?theme=light&packageManager=composer+require&packageName=perafan%2Fcashier-openpay&pattern=endlessClouds&style=style_1&description=This+is+why+it%27s+awesome&md=1&showWatermark=0&fontSize=100px&images=cas)
 
 ## Installation
 

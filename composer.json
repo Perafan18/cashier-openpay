@@ -1,5 +1,5 @@
 {
-    "name": "perafan/cashier-openpay",
+    "name": "aldogtz/cashier-openpay",
     "description": "Laravel Cashier provides an expressive, fluent interface to Openpay's subscription billing services.",
     "keywords": ["laravel", "billing", "cashier", "openpay"],
     "license": "MIT",
@@ -11,7 +11,7 @@
     ],
     "homepage": "https://github.com/Perafan18/cashier-openpay",
     "require": {
-        "illuminate/support": "~6|~7|~8",
+        "illuminate/support": "~9",
         "openpay/sdk": "dev-master",
         "ext-json": "*"
     },
@@ -42,3 +42,4 @@
         }
     }
 }
+
